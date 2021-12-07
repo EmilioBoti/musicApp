@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">musicApp</string>
+    <string name="nameSong">Name Song</string>
+    <string name="artist">by Artist</string>
+    <string name="albumName">Album Name</string>
+</resources>
