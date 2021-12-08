@@ -1,22 +1,14 @@
 package com.example.musicapp
 
 import android.content.Context
-import android.media.MediaPlayer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.musicapp.interfaces.OnClickItemListListenner
 
-class ListMusicAdapter(val context: Context, val listMusic: ArrayList<MusicData>,val listener: OnMusicClickListener) : RecyclerView.Adapter<ListMusicAdapter.MusicViewHolder>() {
-
-    interface OnMusicClickListener{
-        fun onclickMusic(pos: Int)
-    }
+class ListMusicAdapter(val context: Context, val listMusic: ArrayList<MusicData>,val listener: OnClickItemListListenner) : RecyclerView.Adapter<ListMusicAdapter.MusicViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.view_songs, null)
@@ -31,10 +23,9 @@ class ListMusicAdapter(val context: Context, val listMusic: ArrayList<MusicData>
         return listMusic.size
     }
 
-    class MusicViewHolder(itemView: View,val context: Context, val listener: OnMusicClickListener) : RecyclerView.ViewHolder(itemView) {
+    class MusicViewHolder(itemView: View,val context: Context, val listener: OnClickItemListListenner) : RecyclerView.ViewHolder(itemView) {
         lateinit var titleSong : TextView
         lateinit var byArtist: TextView
-        lateinit var media: MediaPlayer
 
         init {
             titleSong = itemView.findViewById(R.id.titleSong)
@@ -45,7 +36,7 @@ class ListMusicAdapter(val context: Context, val listMusic: ArrayList<MusicData>
             byArtist.setText(musicData.AlbumArtist)
 
             itemView.setOnClickListener{
-                listener.onclickMusic(absoluteAdapterPosition)
+                listener.onClickViewList(absoluteAdapterPosition)
             }
         }
     }

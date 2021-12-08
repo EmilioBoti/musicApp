@@ -3,29 +3,19 @@ package com.example.musicapp
 import android.Manifest.permission.*
 import android.content.ContentUris
 import android.content.Intent
-import android.content.LocusId
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import android.provider.MediaStore
-import android.provider.Settings
-import android.util.Log
-import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.Serializable
-import java.security.Permission
-import java.util.jar.Manifest
+import com.example.musicapp.interfaces.OnClickItemListListenner
 
 data class MusicData(
     val id: Long?,
@@ -78,8 +68,8 @@ data class AlbumData(
     val contentUri: Uri?
 )
 
-class MainActivity : AppCompatActivity(), ListAlbumAdapter.OnItemClickLisstener {
-    private val listMusic: ArrayList<MusicData> = ArrayList()
+class MainActivity : AppCompatActivity(), OnClickItemListListenner {
+    private var listMusic: ArrayList<MusicData> = ArrayList()
     private val listAlbumes: ArrayList<AlbumData> = ArrayList()
     lateinit var recyclerView: RecyclerView
 
@@ -88,14 +78,11 @@ class MainActivity : AppCompatActivity(), ListAlbumAdapter.OnItemClickLisstener 
             when{
                 ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE
                 ) == PackageManager.PERMISSION_GRANTED->{
-                    //getInternalStorageMusic()
                     getInternalStorageAlbum()
                     val musicadapter = ListAlbumAdapter(this, listAlbumes, this)
-                    //recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
                     recyclerView.layoutManager = GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false)
                     recyclerView.adapter = musicadapter
-                }
-                else->{
+                }else->{
                     Toast.makeText(applicationContext, "Permission denied 2", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -108,7 +95,6 @@ class MainActivity : AppCompatActivity(), ListAlbumAdapter.OnItemClickLisstener 
         recyclerView = findViewById(R.id.recycleviewContainer)
         //request permision
         requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
-
     }
     private fun getInternalStorageAlbum(){
 
@@ -119,7 +105,6 @@ class MainActivity : AppCompatActivity(), ListAlbumAdapter.OnItemClickLisstener 
 
         val cursorAlbum: Cursor? = applicationContext.contentResolver.query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI,
             columnsAlbums, null, null, null)
-
 
         cursorAlbum?.use {
 
@@ -137,11 +122,8 @@ class MainActivity : AppCompatActivity(), ListAlbumAdapter.OnItemClickLisstener 
                 val contentUris: Uri = ContentUris.withAppendedId(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, idAlbum)
 
                 if(numSong >= 3 && !nameAlbum.equals("WhatsApp Audio") ) listAlbumes.add(AlbumData(idAlbum, nameAlbum, contentUris))
-                //Log.d("album", "${nameAlbum}: songs: ${contentType}")
             }
         }
-
-
     }
     private fun getInternalStorageMusic(){
 
@@ -170,7 +152,6 @@ class MainActivity : AppCompatActivity(), ListAlbumAdapter.OnItemClickLisstener 
                 val title = titleColumns?.let { cursor?.getString(it) }
                 val album = albumColumns?.let { cursor?.getString(it) }
                 val albumArtist = albumArtistColumns?.let { cursor?.getString(it) }
-
                 val name = nameColumns?.let {
                     cursor?.getString(it)
                 }
@@ -178,22 +159,20 @@ class MainActivity : AppCompatActivity(), ListAlbumAdapter.OnItemClickLisstener 
                 val contentUri = id?.let { ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, it.toLong()) }
 
                 if (name?.endsWith(".mp3")!!){
-                    //album?.let { Log.d("musicA", it) }
                     listMusic.add(MusicData(id, title, name, album, albumArtist ,mimetype, contentUri))
                 }
             }
         }
     }
 
-    override fun onSongsClick(pos: Int) {
-
+    override fun onClickViewList(pos: Int) {
+        listMusic = arrayListOf()
         val columnsAlbums = arrayOf(
             MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.DISPLAY_NAME,MediaStore.Audio.Media.MIME_TYPE,
             MediaStore.Audio.Media.ALBUM, MediaStore.Audio.Media.ALBUM_ARTIST,
             MediaStore.Audio.Media.ALBUM_ID
         )
-        //Toast.makeText(conte, "Working", Toast.LENGTH_SHORT).show()
 
         val cursorAlbum: Cursor? = applicationContext.contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
             , columnsAlbums, null, null, null)

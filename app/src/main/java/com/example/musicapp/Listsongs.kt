@@ -3,14 +3,14 @@ package com.example.musicapp
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.musicapp.interfaces.OnClickItemListListenner
 
-class Listsongs : AppCompatActivity(), ListMusicAdapter.OnMusicClickListener {
+class Listsongs : AppCompatActivity(), OnClickItemListListenner {
     var listsongs: ArrayList<MusicData> = arrayListOf()
     lateinit var recyclerViewSong: RecyclerView
     lateinit var media: MediaPlayer
@@ -30,7 +30,7 @@ class Listsongs : AppCompatActivity(), ListMusicAdapter.OnMusicClickListener {
 
     }
 
-    override fun onclickMusic(pos: Int) {
+    override fun onClickViewList(pos: Int) {
         barPlay.visibility = View.VISIBLE
         Toast.makeText(applicationContext, "${pos}", Toast.LENGTH_SHORT).show()
         media = MediaPlayer.create(applicationContext, listsongs.get(pos).contentUri)

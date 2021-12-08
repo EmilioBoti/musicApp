@@ -1,28 +1,19 @@
 package com.example.musicapp
 
-import android.content.ContentUris
 import android.content.Context
-import android.content.Intent
-import android.database.Cursor
-import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.io.Serializable
+import com.example.musicapp.interfaces.OnClickItemListListenner
 
-class ListAlbumAdapter(val context: Context, val listAlbum: ArrayList<AlbumData>, val listener: OnItemClickLisstener) :
+class ListAlbumAdapter(val context: Context, val listAlbum: ArrayList<AlbumData>, val listener: OnClickItemListListenner) :
     RecyclerView.Adapter<ListAlbumAdapter.AlbumViewHolder>() {
 
-    interface OnItemClickLisstener{
+    /*interface OnItemClickLisstener{
         fun onSongsClick(pos: Int)
-    }
+    }*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListAlbumAdapter.AlbumViewHolder {
         val view: View = LayoutInflater.from(context).inflate(R.layout.view_album, null)
@@ -37,7 +28,7 @@ class ListAlbumAdapter(val context: Context, val listAlbum: ArrayList<AlbumData>
         return listAlbum.size
     }
 
-    class AlbumViewHolder(itemView: View, val conte: Context,val listener: OnItemClickLisstener) : RecyclerView.ViewHolder(itemView) {
+    class AlbumViewHolder(itemView: View, val conte: Context,val listener: OnClickItemListListenner) : RecyclerView.ViewHolder(itemView) {
         lateinit var name: TextView
 
         init {
@@ -47,7 +38,8 @@ class ListAlbumAdapter(val context: Context, val listAlbum: ArrayList<AlbumData>
         fun bindDataAlbum(album: AlbumData) {
             name.setText(album.name)
             itemView.setOnClickListener{ it ->
-                listener.onSongsClick(absoluteAdapterPosition)
+                //listener.onSongsClick(absoluteAdapterPosition)
+                listener.onClickViewList(absoluteAdapterPosition)
             }
         }
     }
