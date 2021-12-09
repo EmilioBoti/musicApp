@@ -3,4 +3,5 @@
     <string name="nameSong">Name Song</string>
     <string name="artist">by Artist</string>
     <string name="albumName">Album Name</string>
+    <string name="numSong">1</string>
 </resources>

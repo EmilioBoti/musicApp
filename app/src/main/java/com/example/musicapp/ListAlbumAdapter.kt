@@ -30,15 +30,17 @@ class ListAlbumAdapter(val context: Context, val listAlbum: ArrayList<AlbumData>
 
     class AlbumViewHolder(itemView: View, val conte: Context,val listener: OnClickItemListListenner) : RecyclerView.ViewHolder(itemView) {
         lateinit var name: TextView
+        lateinit var byArtist: TextView
 
         init {
             name = itemView.findViewById(R.id.albumName)
+            byArtist = itemView.findViewById(R.id.byArtist)
         }
 
         fun bindDataAlbum(album: AlbumData) {
             name.setText(album.name)
+            byArtist.setText(album.by)
             itemView.setOnClickListener{ it ->
-                //listener.onSongsClick(absoluteAdapterPosition)
                 listener.onClickViewList(absoluteAdapterPosition)
             }
         }

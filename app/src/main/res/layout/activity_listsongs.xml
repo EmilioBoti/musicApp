@@ -9,37 +9,55 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/songsContaienr"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
+
     <LinearLayout
         android:id="@+id/barPlay"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_100"
         android:layout_gravity="bottom"
-        android:padding="@dimen/dimen_30"
         android:background="@color/white"
         android:elevation="@dimen/dimen_15"
-        android:gravity="center|right"
-        android:visibility="gone"
+        android:gravity="right|center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_5"
+        android:visibility="visible">
 
-        >
-        <ImageView
+        <TextView
+            android:id="@+id/currentSong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/skip_previous_24"
-            />
+            android:background="@color/white"
+            android:textColor="@color/black" />
 
-        <ImageView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/play_arrow_24"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/skip_next_24"
-            />
+            android:layout_marginStart="@dimen/dimen_15"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:src="@drawable/skip_previous_24" />
+
+            <ImageButton
+                android:id="@+id/btnPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:src="@drawable/play_arrow_24" />
+
+            <ImageButton
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:src="@drawable/skip_next_24" />
+        </LinearLayout>
     </LinearLayout>
-
 </FrameLayout>

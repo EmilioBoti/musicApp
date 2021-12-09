@@ -16,7 +16,7 @@ class ListMusicAdapter(val context: Context, val listMusic: ArrayList<MusicData>
     }
 
     override fun onBindViewHolder(holder: MusicViewHolder, position: Int) {
-        holder.bindData(listMusic.get(position))
+        holder.bindData(listMusic.get(position), position)
     }
 
     override fun getItemCount(): Int {
@@ -24,16 +24,20 @@ class ListMusicAdapter(val context: Context, val listMusic: ArrayList<MusicData>
     }
 
     class MusicViewHolder(itemView: View,val context: Context, val listener: OnClickItemListListenner) : RecyclerView.ViewHolder(itemView) {
-        lateinit var titleSong : TextView
-        lateinit var byArtist: TextView
-
+        private var numSong: TextView
+        private var titleSong : TextView
+        private var byArtist: TextView
         init {
             titleSong = itemView.findViewById(R.id.titleSong)
             byArtist = itemView.findViewById(R.id.byArtist)
+            numSong = itemView.findViewById(R.id.numSong)
         }
-        fun bindData(musicData: MusicData) {
+        fun bindData(musicData: MusicData, pos: Int) {
             titleSong.setText(musicData.title)
             byArtist.setText(musicData.AlbumArtist)
+            var position = pos
+            position++
+            numSong.setText(position.toString())
 
             itemView.setOnClickListener{
                 listener.onClickViewList(absoluteAdapterPosition)

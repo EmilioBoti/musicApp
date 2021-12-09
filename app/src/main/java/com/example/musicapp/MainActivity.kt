@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -65,6 +66,7 @@ data class MusicData(
 data class AlbumData(
     val id: Long?,
     val name: String?,
+    val by: String?,
     val contentUri: Uri?
 )
 
@@ -81,6 +83,7 @@ class MainActivity : AppCompatActivity(), OnClickItemListListenner {
                     getInternalStorageAlbum()
                     val musicadapter = ListAlbumAdapter(this, listAlbumes, this)
                     recyclerView.layoutManager = GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false)
+                    //recyclerView.addItemDecoration(DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL))
                     recyclerView.adapter = musicadapter
                 }else->{
                     Toast.makeText(applicationContext, "Permission denied 2", Toast.LENGTH_SHORT).show()
@@ -111,60 +114,20 @@ class MainActivity : AppCompatActivity(), OnClickItemListListenner {
             val idAlbumColumns = it.getColumnIndexOrThrow(MediaStore.Audio.Albums.ALBUM_ID)
             val nameAlbumColumns = it.getColumnIndexOrThrow(MediaStore.Audio.Albums.ALBUM)
             val numberSongsColumns = it.getColumnIndexOrThrow(MediaStore.Audio.Albums.NUMBER_OF_SONGS)
-            //val contentTypeColumns = it.getColumnIndexOrThrow(MediaStore.Audio.Albums.ENTRY_CONTENT_TYPE)
+            val byAtist = it.getColumnIndexOrThrow(MediaStore.Audio.Albums.ARTIST)
 
             while (it.moveToNext()){
 
                 var idAlbum = it.getLong(idAlbumColumns)
                 var nameAlbum = it.getString(nameAlbumColumns)
                 var numSong = it.getInt(numberSongsColumns)
-                //var contentType = it.getString(contentTypeColumns)
+                var by = it.getString(byAtist)
                 val contentUris: Uri = ContentUris.withAppendedId(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, idAlbum)
 
-                if(numSong >= 3 && !nameAlbum.equals("WhatsApp Audio") ) listAlbumes.add(AlbumData(idAlbum, nameAlbum, contentUris))
+                if(numSong >= 3 && !nameAlbum.equals("WhatsApp Audio") ) listAlbumes.add(AlbumData(idAlbum, nameAlbum,by ,contentUris))
             }
         }
     }
-    private fun getInternalStorageMusic(){
-
-        val columns = arrayOf(MediaStore.Audio.Media._ID,MediaStore.Audio.Media.DISPLAY_NAME,
-            MediaStore.Audio.Media.TITLE,MediaStore.Audio.Media.MIME_TYPE,
-            MediaStore.Audio.Media.ALBUM, MediaStore.Audio.Media.ALBUM_ARTIST
-            )
-
-        val cursor: Cursor? = applicationContext.contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-            columns, null, null, null)
-
-        cursor.use { cursor ->
-
-            val idColumns = cursor?.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
-            val titleColumns = cursor?.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)
-            val nameColumns = cursor?.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
-            val mimeTypeColumns = cursor?.getColumnIndexOrThrow(MediaStore.Audio.Media.MIME_TYPE)
-            val albumColumns = cursor?.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
-            val albumArtistColumns = cursor?.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ARTIST)
-
-            Toast.makeText(applicationContext, "list count: ${cursor?.count}", Toast.LENGTH_SHORT).show()
-
-            while(cursor?.moveToNext() == true){
-
-                val id = idColumns?.let { cursor?.getLong(it) }
-                val title = titleColumns?.let { cursor?.getString(it) }
-                val album = albumColumns?.let { cursor?.getString(it) }
-                val albumArtist = albumArtistColumns?.let { cursor?.getString(it) }
-                val name = nameColumns?.let {
-                    cursor?.getString(it)
-                }
-                val mimetype = mimeTypeColumns?.let { cursor?.getString(mimeTypeColumns) }
-                val contentUri = id?.let { ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, it.toLong()) }
-
-                if (name?.endsWith(".mp3")!!){
-                    listMusic.add(MusicData(id, title, name, album, albumArtist ,mimetype, contentUri))
-                }
-            }
-        }
-    }
-
     override fun onClickViewList(pos: Int) {
         listMusic = arrayListOf()
         val columnsAlbums = arrayOf(
@@ -175,7 +138,7 @@ class MainActivity : AppCompatActivity(), OnClickItemListListenner {
         )
 
         val cursorAlbum: Cursor? = applicationContext.contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
-            , columnsAlbums, null, null, null)
+            ,columnsAlbums, null, null, null)
 
         cursorAlbum.use {
 
@@ -210,7 +173,6 @@ class MainActivity : AppCompatActivity(), OnClickItemListListenner {
     fun callListsongsActivity(){
         val data = Bundle()
         data.putParcelableArrayList("list",listMusic)
-
         val intent: Intent = Intent(applicationContext, Listsongs::class.java).apply {
             putExtras(data)
         }
