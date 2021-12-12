@@ -2,6 +2,7 @@ package com.example.musicapp
 
 import android.Manifest.permission.*
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
@@ -65,16 +66,14 @@ data class AlbumData(
     val contentUri: Uri?
 )
 
-class MainActivity : AppCompatActivity(), OnClickPlayerBar {
+class MainActivity : AppCompatActivity(), OnClickPlayerBar, MediaPlayer.OnCompletionListener {
     private var listMusic: ArrayList<MusicData> = ArrayList()
-    private val listAlbumes: ArrayList<AlbumData> = ArrayList()
     lateinit var btnBack: ImageButton
     lateinit var btnPlay: ImageButton
     lateinit var btnNext: ImageButton
     lateinit var currentSong: TextView
     lateinit var byArtist: TextView
     lateinit var media: MediaPlayer
-    var sizeAlbum = 0;
     var songPlaying: Int = 0
 
     val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
@@ -112,43 +111,63 @@ class MainActivity : AppCompatActivity(), OnClickPlayerBar {
             .commit()
     }
 
-    override fun onClickBackBtn(songPlaying: Int) {
-        Toast.makeText(applicationContext, "Back ${songPlaying}", Toast.LENGTH_SHORT).show()
+    override fun onClickBackBtn() {
+        if(songPlaying > 0) songPlaying--
+        playSong(songPlaying)
+        modifyBarPlayer(songPlaying, getDrawable(R.drawable.pause_24))
+
     }
 
     override fun onClickPlayBtn(songPlaying: Int, media: MediaPlayer) {
        pauseSong()
     }
     override fun onClickNextBtn() {
-        Toast.makeText(applicationContext, "Next", Toast.LENGTH_SHORT).show()
+        playNext()
     }
 
-    override fun onClickSong(pos: Int, musicData: MusicData) {
-        btnPlay.setImageDrawable(getDrawable(R.drawable.pause_24))
-        currentSong.setText(musicData.title)
-        byArtist.setText(musicData.AlbumArtist)
-        if(songPlaying <= sizeAlbum) playSong(songPlaying, musicData)
+    override fun onClickSong(pos: Int, listSongs: ArrayList<MusicData>) {
+        listMusic = listSongs
+        songPlaying = pos
+        modifyBarPlayer(songPlaying, getDrawable(R.drawable.pause_24))
+        if(songPlaying <= listMusic.size) playSong(songPlaying)
     }
     private fun pauseSong(){
         if (this.media.isPlaying){
             this.media.pause()
-            btnPlay.setImageDrawable(getDrawable(R.drawable.play_arrow_24))
+            modifyBarPlayer(null, getDrawable(R.drawable.play_arrow_24))
         }else{
-            btnPlay.setImageDrawable(getDrawable(R.drawable.pause_24))
+            modifyBarPlayer(null,getDrawable(R.drawable.pause_24))
             this.media.start()
         }
     }
-    private fun playSong(songToPlay: Int, musicData: MusicData){
+    private fun playSong(songToPlay: Int){
         if (this.media.isPlaying){
             this.media.stop()
         }
-        media = MediaPlayer.create(applicationContext, musicData.contentUri)
-        //media.setDataSource(applicationContext, listsongs.get(songPlaying).contentUri!!)
-        //media = MediaPlayer.create(applicationContext, musicData.contentUri)
-        //btnPlay.setImageDrawable(activity?.getDrawable(R.drawable.pause_24))
-        //currentSong.setText(listsongs.get(songPlaying).title)
-        //media.prepare()
-        //media.setOnCompletionListener(this)
+        media = MediaPlayer.create(applicationContext, listMusic.get(songToPlay).contentUri)
+        media.setOnCompletionListener(this)
         media.start()
+    }
+
+    private fun modifyBarPlayer(pos: Int?, drawable: Drawable?){
+        btnPlay.setImageDrawable(drawable)
+        if (pos != null){
+            currentSong.setText(listMusic.get(pos).title)
+            byArtist.setText(listMusic.get(pos).AlbumArtist)
+        }
+    }
+
+    override fun onCompletion(mp: MediaPlayer?) {
+        playNext()
+    }
+    private fun playNext(){
+        songPlaying++
+        if (songPlaying >= listMusic.size ){
+            songPlaying--
+            playSong(songPlaying)
+        }else{
+            playSong(songPlaying)
+        }
+        modifyBarPlayer(songPlaying, getDrawable(R.drawable.pause_24))
     }
 }

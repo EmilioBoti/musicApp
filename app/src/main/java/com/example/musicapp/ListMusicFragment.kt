@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapp.interfaces.OnClickItemListListenner
 import com.example.musicapp.interfaces.OnClickPlayerBar
 
-class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickItemListListenner, View.OnClickListener, MediaPlayer.OnCompletionListener {
+class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickItemListListenner, View.OnClickListener {
     var listsongs: ArrayList<MusicData> = arrayListOf()
     lateinit var recyclerViewSong: RecyclerView
     lateinit var media: MediaPlayer
@@ -48,10 +48,6 @@ class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickIt
             addItemDecoration(DividerItemDecoration(activity?.applicationContext, LinearLayoutManager.VERTICAL))
             adapter = listmusicAdapter
         }
-
-        media = MediaPlayer.create(activity?.applicationContext, listsongs.get(songPlaying).contentUri)
-        media.setOnCompletionListener(this)
-
         btnBack.setOnClickListener(this)
         btnPlay.setOnClickListener(this)
         btnNext.setOnClickListener(this)
@@ -72,63 +68,20 @@ class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickIt
     }
 
     override fun onClickViewList(pos: Int) {
-        listenner.onClickSong(pos, listsongs.get(pos))
-        /*btnPlay.setImageDrawable(activity?.getDrawable(R.drawable.pause_24))
-        songPlaying = pos
-
-        if (media.isPlaying){
-            media.stop()
-            media.reset()
-        }
-        if(songPlaying <= listsongs.size) playSong(songPlaying)
-        */
+        listenner.onClickSong(pos, listsongs)
     }
-    /*private fun playSong(songToPlay: Int){
-        if (media.isPlaying){
-            media.stop()
-        }
-        //media.setDataSource(applicationContext, listsongs.get(songPlaying).contentUri!!)
-        media = MediaPlayer.create(activity?.applicationContext, listsongs.get(songPlaying).contentUri)
-        btnPlay.setImageDrawable(activity?.getDrawable(R.drawable.pause_24))
-        currentSong.setText(listsongs.get(songPlaying).title)
-        //media.prepare()
-        media.setOnCompletionListener(this)
-        media.start()
-    }*/
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btnBack ->{
-                listenner.onClickBackBtn(songPlaying)
-                /*if(songPlaying > 0) songPlaying--
-                playSong(songPlaying)*/
+                listenner.onClickBackBtn()
             }
             R.id.btnPlay->{
                 listenner.onClickPlayBtn(songPlaying, media)
-                /*if (media.isPlaying){
-                    media.pause()
-                    btnPlay.setImageDrawable(activity?.getDrawable(R.drawable.play_arrow_24))
-                }else{
-                    btnPlay.setImageDrawable(activity?.getDrawable(R.drawable.pause_24))
-                    currentSong.setText(listsongs.get(songPlaying).title)
-                    media.start()
-                }*/
             }
             R.id.btnNext->{
                 listenner.onClickNextBtn()
-                /*Toast.makeText(activity?.applicationContext, "next: ${media.currentPosition/1000}", Toast.LENGTH_SHORT).show()
-                songPlaying++
-                if (songPlaying >= listsongs.size ){
-                    songPlaying--
-                    playSong(songPlaying)
-                }else{
-                    playSong(songPlaying)
-                }*/
             }
         }
-    }
-
-    override fun onCompletion(mp: MediaPlayer?) {
-        //if (songPlaying < listsongs.size) playSong(songPlaying++)
     }
 }
