@@ -118,7 +118,6 @@ class MainActivity : AppCompatActivity(), OnClickPlayerBar {
 
     override fun onClickPlayBtn(songPlaying: Int, media: MediaPlayer) {
        pauseSong()
-        //Toast.makeText(applicationContext, "Play", Toast.LENGTH_SHORT).show()
     }
     override fun onClickNextBtn() {
         Toast.makeText(applicationContext, "Next", Toast.LENGTH_SHORT).show()

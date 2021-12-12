@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.musicapp.interfaces.OnClickItemListListenner
 import com.example.musicapp.interfaces.OnClickPlayerBar
 
-class AlbumListFragment (val listenner: OnClickPlayerBar): Fragment(), OnClickItemListListenner, OnClickPlayerBar {
+class AlbumListFragment (val listenner: OnClickPlayerBar): Fragment(), OnClickItemListListenner {
     lateinit private var listMusic: ArrayList<MusicData>
     lateinit private var listAlbumes: ArrayList<AlbumData>
     lateinit var recyclerView: RecyclerView
@@ -126,7 +126,7 @@ class AlbumListFragment (val listenner: OnClickPlayerBar): Fragment(), OnClickIt
             putParcelableArrayList("list", listMusic)
             putString("currentAlbum", listAlbumes.get(pos).name)
         }
-        var listMusicFragment = ListMusicFragment(this).apply {
+        var listMusicFragment = ListMusicFragment(listenner).apply {
             arguments = data
         }
 
@@ -136,21 +136,4 @@ class AlbumListFragment (val listenner: OnClickPlayerBar): Fragment(), OnClickIt
             ?.addToBackStack("back")
             ?.commit()
     }
-
-    override fun onClickBackBtn(songPlaying: Int) {
-        listenner.onClickBackBtn(songPlaying)
-    }
-
-    override fun onClickPlayBtn(songPlaying: Int, media: MediaPlayer) {
-        listenner.onClickPlayBtn(songPlaying, media)
-    }
-
-    override fun onClickNextBtn() {
-        listenner.onClickNextBtn()
-    }
-
-    override fun onClickSong(pos: Int, musicData: MusicData) {
-        listenner.onClickSong(pos, musicData)
-    }
-
 }
