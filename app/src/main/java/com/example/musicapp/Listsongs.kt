@@ -1,17 +1,11 @@
 package com.example.musicapp
 
-import android.animation.ObjectAnimator
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,13 +16,13 @@ class Listsongs : AppCompatActivity(), OnClickItemListListenner,View.OnClickList
     var listsongs: ArrayList<MusicData> = arrayListOf()
     lateinit var recyclerViewSong: RecyclerView
     lateinit var media: MediaPlayer
-    lateinit var barPlay: LinearLayout
+    lateinit var barPlay: RelativeLayout
     lateinit var btnBack: ImageButton
     lateinit var btnPlay: ImageButton
     lateinit var btnNext: ImageButton
     lateinit var currentSong: TextView
     private var songPlaying: Int = 0
-    private var isSounding: Boolean = false
+    lateinit var currentAlbum: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +30,15 @@ class Listsongs : AppCompatActivity(), OnClickItemListListenner,View.OnClickList
 
         init()
         listsongs = intent.getParcelableArrayListExtra<MusicData>("list") as ArrayList<MusicData>
+        var album = intent.getStringExtra("currentAlbum").toString()
+        currentAlbum.setText(album)
 
         val listmusicAdapter = ListMusicAdapter(this, listsongs, this)
-        recyclerViewSong.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerViewSong.addItemDecoration(DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL))
-        recyclerViewSong.adapter = listmusicAdapter
-
+        recyclerViewSong.apply {
+            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+            addItemDecoration(DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL))
+            adapter = listmusicAdapter
+        }
         media = MediaPlayer.create(applicationContext, listsongs.get(songPlaying).contentUri)
         media.setOnCompletionListener(this)
 
@@ -52,11 +49,12 @@ class Listsongs : AppCompatActivity(), OnClickItemListListenner,View.OnClickList
     }
     fun init(){
         recyclerViewSong = findViewById(R.id.songsContaienr)
-        barPlay = findViewById(R.id.barPlay)
+        barPlay = findViewById(R.id.playBar)
         btnBack = findViewById(R.id.btnBack)
         btnPlay = findViewById(R.id.btnPlay)
         btnNext = findViewById(R.id.btnNext)
-        currentSong = findViewById(R.id.currentSong)
+        currentSong = findViewById(R.id.songPlaying)
+        currentAlbum = findViewById(R.id.currentAlbum)
         media = MediaPlayer()
     }
 
@@ -74,7 +72,6 @@ class Listsongs : AppCompatActivity(), OnClickItemListListenner,View.OnClickList
     }
     override fun onCompletion(mp: MediaPlayer?) {
         if (songPlaying < listsongs.size) playSong(songPlaying++)
-        //Toast.makeText(applicationContext,"It has reached the end", Toast.LENGTH_SHORT).show()
     }
 
     private fun playSong(songToPlay: Int){

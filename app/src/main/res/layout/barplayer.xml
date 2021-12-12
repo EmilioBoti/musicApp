@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/playBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_120"
+        android:layout_alignParentBottom="true"
+        android:elevation="@dimen/dimen_6"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dimen_10">
+
+        <LinearLayout
+            android:id="@+id/player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/music"
+            android:layout_alignEnd="@id/music"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/dimen_15"
+            android:elevation="@dimen/dimen_5"
+            >
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:src="@drawable/skip_previous_24" />
+
+            <ImageButton
+                android:id="@+id/btnPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:src="@drawable/play_arrow_24" />
+
+            <ImageButton
+                android:id="@+id/btnNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:src="@drawable/skip_next_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/currentSong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_toStartOf="@id/player"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/dimen_15"
+
+            >
+
+            <TextView
+                android:id="@+id/songPlaying"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nameSong"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/byArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/artist" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/currentSong"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/dimen_15"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/music_note_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/music"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </RelativeLayout>
+</merge>

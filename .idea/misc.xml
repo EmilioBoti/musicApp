@@ -8,8 +8,12 @@
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/play_arrow_24.xml" value="0.1984375" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/skip_next_24.xml" value="0.1984375" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/skip_previous_24.xml" value="0.1984375" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout-v28/activity_listsongs.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/activity_listsongs.xml" value="0.22" />
-        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/activity_main.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/barplayer.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/fragment_album_list.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/fragment_list_music.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/view_album.xml" value="0.33" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/view_songs.xml" value="0.25" />
       </map>
