@@ -3,31 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListMusicFragment">
+    tools:context=".view.ListMusicFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        android:elevation="@dimen/dimen_4"
-        >
+        android:elevation="@dimen/dimen_4">
+
         <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/goBack"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_back_24"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_20"
             android:background="@color/white"
-            />
+            android:src="@drawable/arrow_back_24" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/currentAlbum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/none"
-            android:textColor="@color/black"
-            android:textSize="@dimen/dimenSt_18"
             android:layout_gravity="center"
-            />
+            android:text="@string/none"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimenSt_18" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView

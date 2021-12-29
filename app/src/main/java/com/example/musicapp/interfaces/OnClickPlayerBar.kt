@@ -1,11 +1,11 @@
 package com.example.musicapp.interfaces
 
-import android.media.MediaPlayer
-import com.example.musicapp.MusicData
+import android.view.ViewGroup
+import com.example.musicapp.model.MusicData
 
 interface OnClickPlayerBar {
     fun onClickBackBtn()
-    fun onClickPlayBtn(songPlaying: Int, media: MediaPlayer)
+    fun onClickPlayBtn()
     fun onClickNextBtn()
     fun onClickSong(pos: Int, listSongs: ArrayList<MusicData>)
 }

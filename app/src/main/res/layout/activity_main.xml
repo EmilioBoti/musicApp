@@ -4,27 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".view.MainActivity"
     android:orientation="vertical"
+    android:background="@color/white"
     >
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarMain"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:visibility="visible"
         >
+
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/albumes"
-            />
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dimenSt_18" />
     </androidx.appcompat.widget.Toolbar>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/playBar"
-        android:layout_below="@id/toolbarMain"
-        />
+        android:layout_below="@id/toolbarMain" />
     <include
         layout="@layout/barplayer"
         android:layout_width="match_parent"
