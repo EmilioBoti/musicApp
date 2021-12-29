@@ -4,19 +4,24 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1984375" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/arrow_back_24.xml" value="0.12532894736842104" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/music_logo_24.xml" value="0.12532894736842104" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/music_note_24.xml" value="0.1984375" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/pause_24.xml" value="0.1984375" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/play_arrow_24.xml" value="0.1984375" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/skip_next_24.xml" value="0.1984375" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/drawable/skip_previous_24.xml" value="0.1984375" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout-v28/activity_listsongs.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout-v29/activity_main.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/activity_listsongs.xml" value="0.22" />
-        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/barplayer.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/barplayer.xml" value="0.22" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/fragment_album_list.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/fragment_list_music.xml" value="0.18229166666666666" />
-        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/view_album.xml" value="0.33" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/fragment_not_found.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/view_album.xml" value="0.2" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/view_songs.xml" value="0.25" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.12532894736842104" />
       </map>
     </option>
   </component>

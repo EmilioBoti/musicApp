@@ -31,4 +31,9 @@
     <dimen name="dimen_120">120dp</dimen>
     <dimen name="dimen_14">14dp</dimen>
     <dimen name="dimen_6">6dp</dimen>
+    <dimen name="dimen_16">16dp</dimen>
+    <dimen name="dimen_0">0dp</dimen>
+    <dimen name="dimen_220">220dp</dimen>
+    <dimen name="dimen_225">225dp</dimen>
+    <dimen name="dimen_230">230dp</dimen>
 </resources>

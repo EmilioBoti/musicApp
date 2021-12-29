@@ -1,4 +1,4 @@
-package com.example.musicapp
+package com.example.musicapp.view
 
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -13,8 +13,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.musicapp.adapters.ListMusicAdapter
+import com.example.musicapp.R
 import com.example.musicapp.interfaces.OnClickItemListListenner
 import com.example.musicapp.interfaces.OnClickPlayerBar
+import com.example.musicapp.model.MusicData
 
 class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickItemListListenner, View.OnClickListener {
     var listsongs: ArrayList<MusicData> = arrayListOf()
@@ -24,8 +27,8 @@ class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickIt
     lateinit var btnBack: ImageButton
     lateinit var btnPlay: ImageButton
     lateinit var btnNext: ImageButton
+    lateinit var btnGoBack: ImageButton
     lateinit var currentSong: TextView
-    private var songPlaying: Int = 0
     lateinit var currentAlbum: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,10 +38,11 @@ class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickIt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
 
+        init()
         val data = arguments?.getString("currentAlbum")
 
+        //get the list Music from an album
         listsongs = arguments?.getParcelableArrayList("list")!!
         currentAlbum.setText(data)
 
@@ -48,13 +52,17 @@ class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickIt
             addItemDecoration(DividerItemDecoration(activity?.applicationContext, LinearLayoutManager.VERTICAL))
             adapter = listmusicAdapter
         }
-        btnBack.setOnClickListener(this)
+
+        //event click
+        btnGoBack.setOnClickListener(this)
         btnPlay.setOnClickListener(this)
         btnNext.setOnClickListener(this)
+        btnBack.setOnClickListener(this)
 
     }
-    fun init(){
+    private fun init(){
         recyclerViewSong = view!!.findViewById(R.id.songsContaienr)
+        btnGoBack = view!!.findViewById(R.id.goBack)
         barPlay = activity?.findViewById(R.id.playBar)!!
         barPlay = activity?.findViewById(R.id.playBar)!!
         btnBack = activity?.findViewById(R.id.btnBack)!!
@@ -64,11 +72,11 @@ class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickIt
         currentAlbum = view!!.findViewById(R.id.currentAlbum)
         val s: Toolbar  = activity?.findViewById(R.id.toolbarMain)!!
         s.visibility = View.GONE
-        media = MediaPlayer()
+        //media = MediaPlayer()
     }
 
-    override fun onClickViewList(pos: Int) {
-        listenner.onClickSong(pos, listsongs)
+    override fun onClickViewList(pos: Int, view: View, parent: ViewGroup) {
+        listenner.onClickSong(pos, listsongs )
     }
 
     override fun onClick(v: View?) {
@@ -76,12 +84,16 @@ class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickIt
             R.id.btnBack ->{
                 listenner.onClickBackBtn()
             }
-            R.id.btnPlay->{
-                listenner.onClickPlayBtn(songPlaying, media)
+            R.id.btnPlay ->{
+                listenner.onClickPlayBtn()
             }
-            R.id.btnNext->{
+            R.id.btnNext ->{
                 listenner.onClickNextBtn()
+            }
+            R.id.goBack ->{
+                parentFragmentManager.popBackStack()
             }
         }
     }
+
 }
