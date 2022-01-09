@@ -39,7 +39,7 @@ class ListMusicAdapter(
         }
         fun bindData(musicData: MusicData, pos: Int) {
             titleSong.setText(musicData.title)
-            byArtist.setText(musicData.AlbumArtist)
+            byArtist.setText(musicData.albumArtist)
 
             itemView.setOnClickListener{
                 listener.onClickViewList(absoluteAdapterPosition, it, parent)

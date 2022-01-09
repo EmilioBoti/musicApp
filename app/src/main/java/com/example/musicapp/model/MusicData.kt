@@ -3,14 +3,14 @@ package com.example.musicapp.model
 import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
-import kotlinx.serialization.Serializable
+
 
 data class MusicData(
     val id: Long?,
     val title: String?,
     val name: String?,
-    val Album: String?,
-    val AlbumArtist: String?,
+    val album: String?,
+    val albumArtist: String?,
     val mimeType: String?,
     val contentUri: Uri?
 ): Parcelable {
@@ -29,8 +29,8 @@ data class MusicData(
         parcel.writeValue(id)
         parcel.writeString(title)
         parcel.writeString(name)
-        parcel.writeString(Album)
-        parcel.writeString(AlbumArtist)
+        parcel.writeString(album)
+        parcel.writeString(albumArtist)
         parcel.writeString(mimeType)
         parcel.writeParcelable(contentUri, flags)
     }
@@ -49,4 +49,5 @@ data class MusicData(
         }
     }
 }
+
 

@@ -18,7 +18,6 @@
             android:id="@+id/player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/music"
             android:layout_alignEnd="@id/music"
             android:gravity="center"
             android:orientation="horizontal"
@@ -56,10 +55,10 @@
             android:id="@+id/currentSong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
             android:layout_toStartOf="@id/player"
-            android:orientation="vertical"
-            android:focusable="true">
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animMusic"
@@ -95,11 +94,20 @@
             android:id="@+id/music"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/currentSong"
+            android:layout_below="@id/player"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingTop="@dimen/dimen_20">
 
+            <SeekBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progress="0"
+                android:progressTint="@color/red_700"
+                android:progressBackgroundTint="@color/red_500"
+                android:thumbTint="@color/red_700"
+                />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

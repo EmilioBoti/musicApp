@@ -7,4 +7,5 @@ interface UpdateUI {
     fun modifyBarPlayer(pos: Int?, drawable: Drawable?, musicData: MusicData)
     fun animMusicView(toPlay: String)
     fun currentSongPlaying(title: String, by: String)
+    fun updateProgressBar(current: Int, duration: Int)
 }

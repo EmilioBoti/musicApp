@@ -1,6 +1,5 @@
 package com.example.musicapp.view
 
-import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,7 +21,6 @@ import com.example.musicapp.model.MusicData
 class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickItemListListenner, View.OnClickListener {
     var listsongs: ArrayList<MusicData> = arrayListOf()
     lateinit var recyclerViewSong: RecyclerView
-    lateinit var media: MediaPlayer
     lateinit var barPlay: RelativeLayout
     lateinit var btnBack: ImageButton
     lateinit var btnPlay: ImageButton
@@ -46,6 +44,7 @@ class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickIt
         listsongs = arguments?.getParcelableArrayList("list")!!
         currentAlbum.setText(data)
 
+        //load list music fragment
         val listmusicAdapter = ListMusicAdapter(activity?.applicationContext!!, listsongs, this)
         recyclerViewSong.apply {
             layoutManager = LinearLayoutManager(activity?.applicationContext, LinearLayoutManager.VERTICAL, false)
@@ -72,7 +71,6 @@ class ListMusicFragment(val listenner: OnClickPlayerBar) : Fragment(), OnClickIt
         currentAlbum = view!!.findViewById(R.id.currentAlbum)
         val s: Toolbar  = activity?.findViewById(R.id.toolbarMain)!!
         s.visibility = View.GONE
-        //media = MediaPlayer()
     }
 
     override fun onClickViewList(pos: Int, view: View, parent: ViewGroup) {

@@ -85,8 +85,7 @@ class AlbumListFragment (val listenner: OnClickPlayerBar): Fragment(), OnClickIt
         }
 
         var fragmentTransation = activity?.supportFragmentManager?.beginTransaction()
-        fragmentTransation
-            ?.replace(R.id.fragmentContainerView, listMusicFragment)
+        fragmentTransation?.replace(R.id.fragmentContainerView, listMusicFragment)
             ?.addToBackStack("back")
             ?.commit()
     }

@@ -15,13 +15,16 @@
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout-v29/activity_main.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/activity_listsongs.xml" value="0.22" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/activity_player.xml" value="0.18" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/barplayer.xml" value="0.22" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/fragment_album_list.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/fragment_list_music.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/fragment_not_found.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/fragment_player.xml" value="0.18" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/view_album.xml" value="0.2" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/layout/view_songs.xml" value="0.25" />
         <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.12532894736842104" />
+        <entry key="..\:/Users/emili/AndroidStudioProjects/musicApp/app/src/main/res/xml/network_security_config.xml" value="0.11513157894736842" />
       </map>
     </option>
   </component>

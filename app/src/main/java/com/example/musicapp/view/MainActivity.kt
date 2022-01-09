@@ -2,59 +2,55 @@ package com.example.musicapp.view
 
 import android.Manifest.permission.*
 import android.animation.ValueAnimator
-import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.media.MediaPlayer
 import android.os.*
+import android.util.Log
 import android.view.View
-import android.widget.ImageButton
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.edit
+import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
-import com.example.musicapp.interactors.PlayBackImput
+import com.example.musicapp.PlayerActivity
+import com.example.musicapp.interactors.PlayBackInput
 import com.example.musicapp.R
+import com.example.musicapp.interactors.PlayInteractor
 import com.example.musicapp.interfaces.UpdateUI
 import com.example.musicapp.model.MusicData
-import kotlin.collections.ArrayList
-
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
-    private var listMusic: ArrayList<MusicData> = ArrayList()
-    lateinit var btnBack: ImageButton
-    lateinit var btnPlay: ImageButton
-    lateinit var btnNext: ImageButton
-    lateinit var currentSong: TextView
-    lateinit var animMusic: LottieAnimationView
-    lateinit var byArtist: TextView
-    lateinit var containerCurrentSong: RelativeLayout
-    //var listViewContainer: ViewGroup? = null
-    lateinit var media: MediaPlayer
-    var songPlaying: Int = 0
-    var durationSong: Int = 0
-    lateinit var plabackImput: PlayBackImput
+    private lateinit var btnBack: ImageButton
+    private lateinit var btnPlay: ImageButton
+    private lateinit var btnNext: ImageButton
+    private lateinit var currentSong: TextView
+    private lateinit var animMusic: LottieAnimationView
+    private lateinit var byArtist: TextView
+    private lateinit var containerCurrentSong: RelativeLayout
+    private lateinit var playBackInput: PlayBackInput
+    private lateinit var progressBar: SeekBar
 
-    val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+    val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            when{
-                ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE
-                ) == PackageManager.PERMISSION_GRANTED->{
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) -> {
                     callAlbumFragment()
-                }else->{
+                }
+                else -> {
                     Toast.makeText(applicationContext, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //get UI Objects
         init()
 
         //request permision to access to media files
@@ -63,6 +59,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
         btnBack.setOnClickListener(this)
         btnPlay.setOnClickListener(this)
         btnNext.setOnClickListener(this)
+        containerCurrentSong.setOnClickListener(this)
+
 
     }
     private fun init(){
@@ -70,17 +68,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
         btnBack = findViewById(R.id.btnBack)
         btnPlay = findViewById(R.id.btnPlay)
         btnNext = findViewById(R.id.btnNext)
+        progressBar = findViewById(R.id.progressBar)
         currentSong = findViewById(R.id.songPlaying)
         byArtist = findViewById(R.id.byArtist)
         containerCurrentSong = findViewById(R.id.currentSong)
-        media = MediaPlayer()
-        plabackImput = PlayBackImput(applicationContext, this)
+        playBackInput = PlayBackInput(applicationContext, this)
 
     }
 
 
     private fun callAlbumFragment(){
-        val albumListFragment = AlbumListFragment(plabackImput)
+        val albumListFragment = AlbumListFragment(playBackInput)
         val fragmentTransation = supportFragmentManager.beginTransaction()
         fragmentTransation.add(R.id.fragmentContainerView, albumListFragment)
             .commit()
@@ -89,31 +87,41 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btnBack ->{
-                plabackImput.onClickBackBtn()
+                playBackInput.onClickBackBtn()
             }
             R.id.btnPlay ->{
-                plabackImput.onClickPlayBtn()
+                playBackInput.onClickPlayBtn()
             }
             R.id.btnNext ->{
-                plabackImput.onClickNextBtn()
+                playBackInput.onClickNextBtn()
+            }
+            R.id.currentSong ->{
+                //val m = MusicData(null,"testing",null, null,null,null,null)
+                //containerCurrentSong.visibility = View.GONE
+                //val intent = Intent(this, PlayerActivity::class.java)
+                /*intent.apply {
+                    //putExtra("inte", bundle)
+                   // putExtra("inter", playInteractor)
+                }*/
+                //startActivity(intent)
             }
         }
     }
-    private fun clearData(){
+    /*private fun clearData(){
         val share = applicationContext?.getSharedPreferences(applicationContext?.getString(R.string.prefs_file)
             , Context.MODE_PRIVATE)
 
         share?.edit {
             clear()
         }
-    }
+    }*/
 
     override fun modifyBarPlayer(pos: Int?, drawable: Drawable?, musicData: MusicData) {
         btnPlay.setImageDrawable(drawable)
 
         pos?.apply {
             currentSong.text = musicData.title
-            byArtist.text = musicData.AlbumArtist
+            byArtist.text = musicData.albumArtist
         }
     }
 
@@ -132,6 +140,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
     override fun currentSongPlaying(title: String, by: String) {
         currentSong.text = title
         byArtist.text = by
+    }
+
+    override fun updateProgressBar(current: Int, duration: Int) {
+        progressBar.max = duration
+        //Log.d("dur", "${duration/60}")
+        progressBar.progress = current
     }
 
 }
