@@ -24,8 +24,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nameSong"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimenSt_14" />
+                android:textColor="@color/black_300"
+                android:textSize="@dimen/dimenSt_14"
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/byArtist"

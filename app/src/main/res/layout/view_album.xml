@@ -41,7 +41,9 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:text="@string/albumName"
                 android:textColor="@color/black"
-                android:textSize="@dimen/dimenSt_14" />
+                android:textSize="@dimen/dimenSt_14"
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/byArtist"
@@ -51,7 +53,9 @@
                 android:layout_marginStart="@dimen/dimen_10"
                 android:layout_marginBottom="@dimen/dimen_5"
                 android:text="@string/albumName"
-                android:textSize="@dimen/dimenSt_12" />
+                android:textSize="@dimen/dimenSt_12"
+                android:textStyle="normal"
+                />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

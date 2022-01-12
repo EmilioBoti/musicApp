@@ -19,7 +19,7 @@
     <dimen name="dimenSt_18">18sp</dimen>
     <dimen name="dimenSt_10">10sp</dimen>
     <dimen name="dimen_250">250dp</dimen>
-    <dimen name="dimenSt_12">12dp</dimen>
+    <dimen name="dimenSt_12">12sp</dimen>
     <dimen name="dimenSt_14">14sp</dimen>
     <dimen name="dimen_100">100dp</dimen>
     <dimen name="dimen_50">50dp</dimen>
@@ -36,4 +36,5 @@
     <dimen name="dimen_220">220dp</dimen>
     <dimen name="dimen_225">225dp</dimen>
     <dimen name="dimen_230">230dp</dimen>
+    <dimen name="dimen_35">35dp</dimen>
 </resources>

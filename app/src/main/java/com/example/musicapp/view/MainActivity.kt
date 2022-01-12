@@ -2,27 +2,29 @@ package com.example.musicapp.view
 
 import android.Manifest.permission.*
 import android.animation.ValueAnimator
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.media.MediaPlayer
 import android.os.*
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
-import com.example.musicapp.PlayerActivity
 import com.example.musicapp.interactors.PlayBackInput
 import com.example.musicapp.R
-import com.example.musicapp.interactors.PlayInteractor
 import com.example.musicapp.interfaces.UpdateUI
 import com.example.musicapp.model.MusicData
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
+class MainActivity : AppCompatActivity(), View.OnClickListener,SeekBar.OnSeekBarChangeListener, UpdateUI {
     private lateinit var btnBack: ImageButton
     private lateinit var btnPlay: ImageButton
     private lateinit var btnNext: ImageButton
@@ -32,6 +34,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
     private lateinit var containerCurrentSong: RelativeLayout
     private lateinit var playBackInput: PlayBackInput
     private lateinit var progressBar: SeekBar
+    val channelId = "com.example.musicapp"
+    val notificationId = 1
 
     val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -55,12 +59,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
 
         //request permision to access to media files
         requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
+        createNotificationChannel()
+       // showNotifycationMusic()
 
         btnBack.setOnClickListener(this)
         btnPlay.setOnClickListener(this)
         btnNext.setOnClickListener(this)
         containerCurrentSong.setOnClickListener(this)
 
+        progressBar.setOnSeekBarChangeListener(this)
 
     }
     private fun init(){
@@ -75,7 +82,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
         playBackInput = PlayBackInput(applicationContext, this)
 
     }
-
 
     private fun callAlbumFragment(){
         val albumListFragment = AlbumListFragment(playBackInput)
@@ -107,14 +113,44 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
             }
         }
     }
-    /*private fun clearData(){
-        val share = applicationContext?.getSharedPreferences(applicationContext?.getString(R.string.prefs_file)
-            , Context.MODE_PRIVATE)
+    private fun createNotificationChannel(){
 
-        share?.edit {
-            clear()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name = "com.example.musicapp"
+            val descriptionText = "music notification"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+
+            val channel = NotificationChannel(channelId, name, importance).apply {
+                description = descriptionText
+            }
+            //register channel in the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
-    }*/
+    }
+
+    private fun showNotifycationMusic(){
+
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
+        val builder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.music_note_24)
+            .setContentTitle("My notification")
+            .setContentText("Hello World!")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            // Set the intent that will fire when the user taps the notification
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(notificationId, builder.build())
+        }
+    }
 
     override fun modifyBarPlayer(pos: Int?, drawable: Drawable?, musicData: MusicData) {
         btnPlay.setImageDrawable(drawable)
@@ -144,8 +180,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, UpdateUI {
 
     override fun updateProgressBar(current: Int, duration: Int) {
         progressBar.max = duration
-        //Log.d("dur", "${duration/60}")
         progressBar.progress = current
+    }
+
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+    }
+
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {
+    }
+
+    override fun onStopTrackingTouch(seekBar: SeekBar?) {
+        seekBar?.progress?.let {
+            playBackInput.onTouchProgressbar(it)
+            progressBar.progress = it
+        }
     }
 
 }

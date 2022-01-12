@@ -65,6 +65,7 @@ class AlbumListFragment (val listenner: OnClickPlayerBar): Fragment(), OnClickIt
 
     override fun onClickViewList(pos: Int, view: View, parent: ViewGroup) {
         listMusic = arrayListOf()
+
         //get all music from the album selected
         listMusic = activity?.let { activity->
             listAlbumes[pos].id?.let { id ->

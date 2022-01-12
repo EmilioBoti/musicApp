@@ -8,5 +8,5 @@ interface OnClickPlayerBar {
     fun onClickPlayBtn()
     fun onClickNextBtn()
     fun onClickSong(pos: Int, listSongs: ArrayList<MusicData>)
-    fun onClickBanner(mainActivity: MainActivity)
+    fun onTouchProgressbar(process: Int)
 }
